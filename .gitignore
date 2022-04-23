@@ -1,0 +1,14 @@
+﻿Assembly-CSharp.csproj
+Assembly-CSharp-firstpass.csproj
+MessagePack.Annotations.csproj
+MessagePack.csproj
+NewAssembly.csproj
+*.csproj
+*.sln
+UserSettings
+Temp
+Packages
+obj
+Logs
+Library
+.idea
