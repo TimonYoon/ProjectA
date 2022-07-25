@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour, IBullet
 
     public void Shoot(Vector2 _dir)
     {
+        gameObject.SetActive(true);
         dir = _dir;
     }
 
@@ -38,4 +39,17 @@ public class Bullet : MonoBehaviour, IBullet
         var pos = dir * speed;
         transform.position += new Vector3(pos.x,pos.y,0);
     }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Enemy"))
+        {
+            return;
+        }
+        
+        other.gameObject.SetActive(false);
+        gameObject.SetActive(false);
+    }
+    
+    
 }

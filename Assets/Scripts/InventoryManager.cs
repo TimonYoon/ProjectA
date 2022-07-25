@@ -1,32 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
-public class InventoryManager : IDataBasic
+public class InventoryManager : InventoryData
 {
     public static InventoryManager instance;
-    public InventoryManager(InventoryData _inventoryData)
+    public InventoryManager()
     {
         instance = this;
-        inventoryData = _inventoryData;
+        SetItem(1, 99);
+        //inventoryData = _inventoryData;
     }
 
-    public InventoryData inventoryData { get; }
+    //public InventoryData inventoryData { get; }
 
     public void SetItem(int itemCode, int count)
     {
-        if (inventoryData.InvenDic.ContainsKey(itemCode))
+        if (invenDic.ContainsKey(itemCode))
         {
-            // inventoryData.InvenDic[itemCode] += count;
+            count = invenDic[itemCode].Value + count;
+            invenDic[itemCode].SetValueAndForceNotify(count);
+        }
+        else
+        {
+            invenDic.Add(itemCode,new ReactiveProperty<int>());
+            invenDic[itemCode].SetValueAndForceNotify(count);
         }
     }
 }
 
 public class InventoryData : DataBasic
 {
-    private Dictionary<int, int> invenDic = new Dictionary<int, int>();
-    public IReactiveDictionary<int, IReactiveProperty<int>> InvenDic = new ReactiveDictionary<int, IReactiveProperty<int>>(); //> invenDic;
+    protected ReactiveDictionary<int, ReactiveProperty<int>> invenDic = new ReactiveDictionary<int, ReactiveProperty<int>>();
+    public IReactiveDictionary<int, ReactiveProperty<int>> InvenDic => invenDic;
+
 }
 
 public interface IDataBasic

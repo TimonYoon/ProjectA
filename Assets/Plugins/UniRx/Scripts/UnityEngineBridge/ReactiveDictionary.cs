@@ -108,7 +108,7 @@ namespace UniRx
 
     public interface IReactiveDictionary<TKey, TValue> : IReadOnlyReactiveDictionary<TKey, TValue>, IDictionary<TKey, TValue>
     {
-        bool ContainsKey(int itemCode);
+        
     }
 
     [Serializable]
@@ -236,8 +236,6 @@ namespace UniRx
         {
             return inner.TryGetValue(key, out value);
         }
-
-        public bool ContainsKey(int itemCode) { throw new NotImplementedException(); }
 
         public Dictionary<TKey, TValue>.Enumerator GetEnumerator()
         {

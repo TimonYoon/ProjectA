@@ -6,6 +6,8 @@ using UnityEngine;
 public class CoObject : MonoBehaviour
 {
     [SerializeField] private RectTransform rectTransform;
+
+    [Header("Data")] [SerializeField] private int itemCode;
     private bool isStart = false;
     private bool isAuto = false;
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,7 +24,6 @@ public class CoObject : MonoBehaviour
         
         isStart = true;
         var position = transform.position;
-        var pos = position;
         if (Camera.main is { })
         {
             rectTransform.position = Camera.main.WorldToScreenPoint(position);
@@ -70,6 +71,7 @@ public class CoObject : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             yield return null;
+            InventoryManager.instance.SetItem(itemCode,1);
             Debug.Log("Get!! ");
         }
     }
